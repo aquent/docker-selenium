@@ -18,7 +18,9 @@ function shutdown {
     echo "shutdown complete"
 }
 
-java ${JAVA_OPTS} -jar /opt/selenium/selenium-server-standalone.jar \
+java ${JAVA_OPTS} -cp /opt/selenium/selenium-video-node.jar:/opt/selenium/selenium-server-standalone.jar \
+  org.openqa.grid.selenium.GridLauncher \
+  -servlets com.aimmac23.hub.servlet.HubVideoDownloadServlet \
   -role hub \
   -hubConfig $CONF \
   ${SE_OPTS} &
