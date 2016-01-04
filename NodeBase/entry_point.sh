@@ -31,9 +31,9 @@ fi
 SCREEN_PATH="/tmp/screen"
 mkdir -p $SCREEN_PATH
 xvfb-run --server-args="$DISPLAY -screen 0 $GEOMETRY -ac +extension RANDR -fbdir $SCREEN_PATH" \
-  java ${JAVA_OPTS} -cp /opt/selenium/selenium-video-node.jar:/opt/selenium/selenium-server-standalone.jar \
+  java ${JAVA_OPTS} -Dvideo.xvfbscreen=$SCREEN_PATH \
+    -cp /opt/selenium/selenium-video-node.jar:/opt/selenium/selenium-server-standalone.jar \
     org.openqa.grid.selenium.GridLauncher \
-    -Dvideo.xvfbscreen=$SCREEN_PATH \
     -servlets com.aimmac23.node.servlet.VideoRecordingControlServlet -proxy com.aimmac23.hub.proxy.VideoProxy \
     -role node \
     -hub http://$HUB_PORT_4444_TCP_ADDR:$HUB_PORT_4444_TCP_PORT/grid/register \
