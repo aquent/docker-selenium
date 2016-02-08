@@ -1,4 +1,4 @@
-FROM ubuntu:15.04
+FROM ubuntu:15.10
 MAINTAINER Selenium <selenium-developers@googlegroups.com>
 
 #================================================
@@ -25,8 +25,9 @@ RUN apt-get update -qqy \
 # Selenium
 #==========
 RUN  mkdir -p /opt/selenium \
-  && wget --no-verbose http://selenium-release.storage.googleapis.com/2.48/selenium-server-standalone-2.48.2.jar -O /opt/selenium/selenium-server-standalone.jar \
+  && wget --no-verbose http://selenium-release.storage.googleapis.com/2.50/selenium-server-standalone-2.50.0.jar -O /opt/selenium/selenium-server-standalone.jar \
   && wget --no-verbose https://repo1.maven.org/maven2/com/aimmac23/selenium-video-node/1.8/selenium-video-node-1.8.jar -O /opt/selenium/selenium-video-node.jar
+
 
 #========================================
 # Add normal user with passwordless sudo
