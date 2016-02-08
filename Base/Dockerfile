@@ -26,7 +26,7 @@ RUN apt-get update -qqy \
 #==========
 RUN  mkdir -p /opt/selenium \
   && wget --no-verbose http://selenium-release.storage.googleapis.com/2.50/selenium-server-standalone-2.50.0.jar -O /opt/selenium/selenium-server-standalone.jar \
-  && wget --no-verbose https://repo1.maven.org/maven2/com/aimmac23/selenium-video-node/1.8/selenium-video-node-1.8.jar -O /opt/selenium/selenium-video-node.jar
+  && wget --no-verbose https://repo1.maven.org/maven2/com/aimmac23/selenium-video-node/1.9/selenium-video-node-1.9.jar -O /opt/selenium/selenium-video-node.jar
 
 
 #========================================
