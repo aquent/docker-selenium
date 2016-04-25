@@ -1,4 +1,7 @@
 #!/bin/bash
+
+source /opt/bin/functions.sh
+
 export GEOMETRY="$SCREEN_WIDTH""x""$SCREEN_HEIGHT""x""$SCREEN_DEPTH"
 
 if [ ! -e /opt/selenium/config.json ]; then
@@ -30,7 +33,8 @@ fi
 
 SCREEN_PATH="/tmp/screen"
 mkdir -p $SCREEN_PATH
-xvfb-run --server-args="$DISPLAY -screen 0 $GEOMETRY -ac +extension RANDR -fbdir $SCREEN_PATH" \
+SERVERNUM=$(get_server_num)
+xvfb-run -n $SERVERNUM --server-args="$DISPLAY -screen 0 $GEOMETRY -ac +extension RANDR -fbdir $SCREEN_PATH" \
   bash -c "unclutter -idle 1 &
     java ${JAVA_OPTS} -Dvideo.xvfbscreen=$SCREEN_PATH \
       -cp /opt/selenium/selenium-video-node.jar:/opt/selenium/selenium-server-standalone.jar \
