@@ -46,7 +46,7 @@ env | cut -f 1 -d "=" | sort > asroot
   bash -c "unclutter -idle 1 &
     java ${JAVA_OPTS} -Dvideo.xvfbscreen=$SCREEN_PATH \
       -cp /opt/selenium/selenium-video-node.jar:/opt/selenium/selenium-server-standalone.jar \
-      org.openqa.grid.selenium.GridLauncher \
+      org.openqa.grid.selenium.GridLauncherV3 \
       -servlets com.aimmac23.node.servlet.VideoRecordingControlServlet -proxy com.aimmac23.hub.proxy.VideoProxy \
       -role node \
       -hub http://$HUB_PORT_4444_TCP_ADDR:$HUB_PORT_4444_TCP_PORT/grid/register \

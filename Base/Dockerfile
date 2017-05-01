@@ -28,7 +28,7 @@ RUN apt-get update -qqy \
 # Timezone settings
 # Possible alternative: https://github.com/docker/docker/issues/3359#issuecomment-32150214
 #===================
-ENV TZ "UTC"
+ENV TZ "US/Eastern"
 RUN echo "${TZ}" > /etc/timezone \
   && dpkg-reconfigure --frontend noninteractive tzdata
 
@@ -37,7 +37,7 @@ RUN echo "${TZ}" > /etc/timezone \
 #==========
 RUN  mkdir -p /opt/selenium \
   && wget --no-verbose https://selenium-release.storage.googleapis.com/3.4/selenium-server-standalone-3.4.0.jar -O /opt/selenium/selenium-server-standalone.jar \
-  && wget --no-verbose https://repo1.maven.org/maven2/com/aimmac23/selenium-video-node/1.9/selenium-video-node-1.9.jar -O /opt/selenium/selenium-video-node.jar
+  && wget --no-verbose https://repo1.maven.org/maven2/com/aimmac23/selenium-video-node/2.3/selenium-video-node-2.3.jar -O /opt/selenium/selenium-video-node.jar
 
 #========================================
 # Add normal user with passwordless sudo

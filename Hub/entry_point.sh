@@ -20,7 +20,7 @@ function shutdown {
 }
 
 java ${JAVA_OPTS} -cp /opt/selenium/selenium-video-node.jar:/opt/selenium/selenium-server-standalone.jar \
-  org.openqa.grid.selenium.GridLauncher \
+  org.openqa.grid.selenium.GridLauncherV3 \
   -servlets com.aimmac23.hub.servlet.HubVideoDownloadServlet \
   -role hub \
   -hubConfig $CONF \
