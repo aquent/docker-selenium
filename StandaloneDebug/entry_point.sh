@@ -1,4 +1,6 @@
 #!/bin/bash
+#
+# IMPORTANT: Change this file only in directory StandaloneDebug!
 
 source /opt/bin/functions.sh
 
@@ -13,12 +15,19 @@ if [ ! -z "$SE_OPTS" ]; then
   echo "appending selenium options: ${SE_OPTS}"
 fi
 
+rm -f /tmp/.X*lock
+
 SERVERNUM=$(get_server_num)
 env | cut -f 1 -d "=" | sort > asroot
 sudo -E -u seluser -i env | cut -f 1 -d "=" | sort > asseluser
+
+# Add root environment variables that are not present in the seluser
+# environment to an environment file.
+"$(for E in $(grep -vxFf asseluser asroot); do echo $E="'${!E}'" >> ~seluser/selenv; done)" \
+echo "DISPLAY=${DISPLAY}" >> ~seluser/selenv
+
 sudo -E -i -u seluser \
-  $(for E in $(grep -vxFf asseluser asroot); do echo $E=$(eval echo \$$E); done) \
-  DISPLAY=$DISPLAY \
+  source selenv && \
   xvfb-run -n $SERVERNUM --server-args="-screen 0 $GEOMETRY -ac +extension RANDR" \
   java ${JAVA_OPTS} -jar /opt/selenium/selenium-server-standalone.jar \
   ${SE_OPTS} &

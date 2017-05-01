@@ -1,5 +1,9 @@
-FROM selenium/node-chrome:2.53.0
-MAINTAINER Selenium <selenium-developers@googlegroups.com>
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# NOTE: DO *NOT* EDIT THIS FILE.  IT IS GENERATED.
+# PLEASE UPDATE Dockerfile.txt INSTEAD OF THIS FILE
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+FROM selenium/node-chrome:3.4.0-chromium
+LABEL authors=SeleniumHQ
 
 USER root
 

@@ -1,5 +1,5 @@
 FROM ubuntu:16.04
-MAINTAINER Selenium <selenium-developers@googlegroups.com>
+LABEL authors="Selenium <selenium-developers@googlegroups.com>"
 
 #================================================
 # Customize sources for apt-get
@@ -17,17 +17,26 @@ RUN apt-get update -qqy \
     bzip2 \
     ca-certificates \
     openjdk-8-jre-headless \
+    tzdata \
     sudo \
     unzip \
     wget \
-  && rm -rf /var/lib/apt/lists/* \
+  && rm -rf /var/lib/apt/lists/* /var/cache/apt/* \
   && sed -i 's/securerandom\.source=file:\/dev\/random/securerandom\.source=file:\/dev\/urandom/' ./usr/lib/jvm/java-8-openjdk-amd64/jre/lib/security/java.security
+
+#===================
+# Timezone settings
+# Possible alternative: https://github.com/docker/docker/issues/3359#issuecomment-32150214
+#===================
+ENV TZ "UTC"
+RUN echo "${TZ}" > /etc/timezone \
+  && dpkg-reconfigure --frontend noninteractive tzdata
 
 #==========
 # Selenium
 #==========
 RUN  mkdir -p /opt/selenium \
-  && wget --no-verbose https://selenium-release.storage.googleapis.com/2.53/selenium-server-standalone-2.53.0.jar -O /opt/selenium/selenium-server-standalone.jar \
+  && wget --no-verbose https://selenium-release.storage.googleapis.com/3.4/selenium-server-standalone-3.4.0.jar -O /opt/selenium/selenium-server-standalone.jar \
   && wget --no-verbose https://repo1.maven.org/maven2/com/aimmac23/selenium-video-node/1.9/selenium-video-node-1.9.jar -O /opt/selenium/selenium-video-node.jar
 
 #========================================

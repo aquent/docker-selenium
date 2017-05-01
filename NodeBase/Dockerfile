@@ -1,24 +1,21 @@
-FROM selenium/base:2.53.0
-MAINTAINER Selenium <selenium-developers@googlegroups.com>
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# NOTE: DO *NOT* EDIT THIS FILE.  IT IS GENERATED.
+# PLEASE UPDATE Dockerfile.txt INSTEAD OF THIS FILE
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+FROM selenium/base:3.4.0-chromium
+LABEL authors=SeleniumHQ
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV DEBCONF_NONINTERACTIVE_SEEN true
-
-#===================
-# Timezone settings
-# Possible alternative: https://github.com/docker/docker/issues/3359#issuecomment-32150214
-#===================
-ENV TZ "US/Eastern"
-RUN echo "${TZ}" > /etc/timezone \
-  && dpkg-reconfigure --frontend noninteractive tzdata
 
 #==============
 # VNC and Xvfb
 #==============
 RUN apt-get update -qqy \
   && apt-get -qqy install \
+    locales \
     xvfb unclutter \
-  && rm -rf /var/lib/apt/lists/*
+  && rm -rf /var/lib/apt/lists/* /var/cache/apt/*
 
 #==============================
 # Scripts to run Selenium Node
