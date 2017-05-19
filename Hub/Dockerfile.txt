@@ -15,7 +15,7 @@ ENV GRID_JETTY_MAX_THREADS -1
 # In milliseconds, maps to "cleanUpCycle"
 ENV GRID_CLEAN_UP_CYCLE 5000
 # In seconds, maps to "browserTimeout"
-ENV GRID_BROWSER_TIMEOUT 0
+ENV GRID_BROWSER_TIMEOUT 60
 # In seconds, maps to "timeout"
 ENV GRID_TIMEOUT 30
 # Debug
