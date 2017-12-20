@@ -1,7 +1,9 @@
 #!/bin/bash
+#
+# IMPORTANT: Change this file only in directory NodeDebug!
 
 source /opt/bin/functions.sh
-/opt/selenium/generate_config > /opt/selenium/config.json
+/opt/bin/generate_config > /opt/selenium/config.json
 
 export GEOMETRY="$SCREEN_WIDTH""x""$SCREEN_HEIGHT""x""$SCREEN_DEPTH"
 
@@ -20,16 +22,15 @@ function shutdown {
   wait $NODE_PID
 }
 
+REMOTE_HOST_PARAM=""
 if [ ! -z "$REMOTE_HOST" ]; then
-  >&2 echo "REMOTE_HOST variable is *DEPRECATED* in these docker containers.  Please use SE_OPTS=\"-host <host> -port <port>\" instead!"
-  exit 1
+  echo "REMOTE_HOST variable is set, appending -remoteHost"
+  REMOTE_HOST_PARAM="-remoteHost $REMOTE_HOST"
 fi
 
 if [ ! -z "$SE_OPTS" ]; then
   echo "appending selenium options: ${SE_OPTS}"
 fi
-
-# TODO: Look into http://www.seleniumhq.org/docs/05_selenium_rc.jsp#browser-side-logs
 
 SCREEN_PATH="/tmp/screen"
 mkdir -p $SCREEN_PATH
@@ -37,12 +38,8 @@ SERVERNUM=$(get_server_num)
 
 rm -f /tmp/.X*lock
 
-env | cut -f 1 -d "=" | sort > asroot
-  sudo -E -u seluser -i env | cut -f 1 -d "=" | sort > asseluser
-  sudo -E -i -u seluser \
-  "$(for E in $(grep -vxFf asseluser asroot); do echo $E=$(eval echo \$$E); done)" \
-  DISPLAY=$DISPLAY \
-  xvfb-run -n $SERVERNUM --server-args="$DISPLAY -screen 0 $GEOMETRY -ac +extension RANDR -fbdir $SCREEN_PATH" \
+DISPLAY=$DISPLAY \
+  xvfb-run -n $SERVERNUM --server-args="-screen 0 $GEOMETRY -ac +extension RANDR -fbdir $SCREEN_PATH" \
   bash -c "unclutter -idle 1 &
     java ${JAVA_OPTS} -Dvideo.xvfbscreen=$SCREEN_PATH \
       -cp /opt/selenium/selenium-video-node.jar:/opt/selenium/selenium-server-standalone.jar \

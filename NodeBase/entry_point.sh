@@ -1,7 +1,7 @@
 #!/bin/bash
 
 source /opt/bin/functions.sh
-/opt/selenium/generate_config > /opt/selenium/config.json
+/opt/bin/generate_config > /opt/selenium/config.json
 
 export GEOMETRY="$SCREEN_WIDTH""x""$SCREEN_HEIGHT""x""$SCREEN_DEPTH"
 
@@ -20,16 +20,15 @@ function shutdown {
   wait $NODE_PID
 }
 
+REMOTE_HOST_PARAM=""
 if [ ! -z "$REMOTE_HOST" ]; then
-  >&2 echo "REMOTE_HOST variable is *DEPRECATED* in these docker containers.  Please use SE_OPTS=\"-host <host> -port <port>\" instead!"
-  exit 1
+  echo "REMOTE_HOST variable is set, appending -remoteHost"
+  REMOTE_HOST_PARAM="-remoteHost $REMOTE_HOST"
 fi
 
 if [ ! -z "$SE_OPTS" ]; then
   echo "appending selenium options: ${SE_OPTS}"
 fi
-
-# TODO: Look into http://www.seleniumhq.org/docs/05_selenium_rc.jsp#browser-side-logs
 
 SCREEN_PATH="/tmp/screen"
 mkdir -p $SCREEN_PATH
@@ -45,7 +44,6 @@ xvfb-run -n $SERVERNUM --server-args="-screen 0 $GEOMETRY -ac +extension RANDR -
       -servlets com.aimmac23.node.servlet.VideoRecordingControlServlet -proxy com.aimmac23.hub.proxy.VideoProxy \
       -role node \
       -hub http://$HUB_PORT_4444_TCP_ADDR:$HUB_PORT_4444_TCP_PORT/grid/register \
-      ${REMOTE_HOST_PARAM} \
       -nodeConfig /opt/selenium/config.json \
       ${SE_OPTS}
     kill %1" &

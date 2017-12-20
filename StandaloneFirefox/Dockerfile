@@ -2,17 +2,14 @@
 # NOTE: DO *NOT* EDIT THIS FILE.  IT IS GENERATED.
 # PLEASE UPDATE Dockerfile.txt INSTEAD OF THIS FILE
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-FROM selenium/node-firefox:latest
+FROM selenium/node-firefox:3.8.1-bohrium
 LABEL authors=SeleniumHQ
 
-USER root
+USER seluser
 
 #====================================
 # Scripts to run Selenium Standalone
 #====================================
 COPY entry_point.sh /opt/bin/entry_point.sh
-RUN chmod +x /opt/bin/entry_point.sh
-
-USER seluser
 
 EXPOSE 4444
