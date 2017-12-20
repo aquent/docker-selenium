@@ -1,4 +1,4 @@
-FROM ubuntu:xenial-20170510
+FROM ubuntu:xenial-20171201
 LABEL authors="Selenium <selenium-developers@googlegroups.com>"
 
 #================================================
